@@ -34,7 +34,7 @@ class CliHandler:
 
     def reset(self, name):
         if name in self.process:
-            del self.process[name]
+            self.kill(name)
         if name in self.returncode:
             del self.returncode[name]
 
@@ -62,7 +62,7 @@ class CliHandler:
                 if retcode is not None:
                     if name in self.process:
                         self.returncode[name] = retcode
-                        del self.process[name]
+                        self.kill(name)
                     break
 
     def kill(self, name):

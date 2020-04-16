@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: clihandler
-Version: 0.2
+Version: 0.3
 Summary: Execute commandline codes directly from python, and iterate through the output.
 Home-page: https://github.com/imneonizer/clihandler
 Author: Nitin Rai

@@ -36,8 +36,6 @@ for line in cli.capture(p):
     print(line)
     if line.startswith("Ping statistics"):
     	cli.kill(p)
-
-print(cli.return_code(p))
 ```
 
 Since we are killing the command execution in between logically, this will give ``return_code = 130``, and incase the command is failed to execute, it will give ``return_code = 1``.
