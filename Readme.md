@@ -25,7 +25,7 @@ This will execute the command in background and we can iterate over the output v
 
 and what's more interesting is while iterating over the output in real-time if we want to interrupt the command execution logically based on output we can do that too.
 
-```
+```python
 .
 .
 for line in cli.capture(p):
