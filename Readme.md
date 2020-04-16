@@ -19,11 +19,15 @@ p = cli.call(name="ping", cmd="ping -n 10 127.0.0.1")
 
 for line in cli.capture(p):
     print(line)
+
+print(cli.return_code(p))
 ````
 
 This will execute the command in background and we can iterate over the output via a for loop.
 
-and what's more interesting is while iterating over the output in real-time if we want to interrupt the command execution logically based on output we can do that too.
+And what's more interesting is while iterating over the output in real-time if we want to interrupt the command execution logically based on output we can do that too.
+
+If the command executed successfully it will give ``return_code = 0``.
 
 ```python
 .
@@ -33,6 +37,12 @@ for line in cli.capture(p):
     if line.startswith("Ping statistics"):
     	cli.kill(p)
 ```
+
+Since we are killing the command execution in between logically, this will give ``return_code = 130``, and incase the command is failed to execute, it will give ``return_code = 1``.
+
+> return codes are stored inside the object as long as no other call is made with the same name
+>
+> incase you wanna delete all the traces of subprocess call, use: cli.reset(p)
 
 One good thing about clihandler is, if you execute the same call command multiple time with the same name, while previous execution wasn't completed it will not interrupt the previous command execution rather return the same result.
 

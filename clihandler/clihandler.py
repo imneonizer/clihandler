@@ -3,6 +3,7 @@ import subprocess
 class CliHandler:
     def __init__(self):
         self.process = {}
+        self.returncode = {}
 
     def call(self, name, cmd, shell=True):
         """
@@ -16,6 +17,7 @@ class CliHandler:
         else:
             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=shell)
             self.process[name] = p
+            self.returncode[name] = None
             return name
 
     def get(self, name):
@@ -25,6 +27,16 @@ class CliHandler:
         """
         if name in self.process:
             return self.process[name]
+
+    def return_code(self, name):
+        if name in self.returncode:
+            return self.returncode[name]
+
+    def reset(self, name):
+        if name in self.process:
+            del self.process[name]
+        if name in self.returncode:
+            del self.returncode[name]
 
     def list_process(self):
         """
@@ -49,6 +61,7 @@ class CliHandler:
 
                 if retcode is not None:
                     if name in self.process:
+                        self.returncode[name] = retcode
                         del self.process[name]
                     break
 
@@ -59,8 +72,9 @@ class CliHandler:
         if name in self.process:
             p = self.process[name]
             p.kill()
+            self.returncode[name] = 130
             del self.process[name]
-            return True
+            return 130
 
     def __repr__(self):
         return str(self.__class__.__name__)+'({})'.format(self.process)
