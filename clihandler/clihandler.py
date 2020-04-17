@@ -1,4 +1,6 @@
 import subprocess
+import signal
+import os
 
 class CliHandler:
     def __init__(self):
@@ -71,7 +73,7 @@ class CliHandler:
         """
         if name in self.process:
             p = self.process[name]
-            p.kill()
+            os.kill(p.pid, 0)
             self.returncode[name] = returncode
             del self.process[name]
             return self.returncode[name]
