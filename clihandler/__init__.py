@@ -9,4 +9,4 @@ kill = cli.kill
 return_code = cli.return_code
 reset = cli.reset
 list_process = cli.list_process
-__version__ = '0.3'
+__version__ = '0.4'

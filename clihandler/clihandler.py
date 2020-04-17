@@ -62,19 +62,19 @@ class CliHandler:
                 if retcode is not None:
                     if name in self.process:
                         self.returncode[name] = retcode
-                        self.kill(name)
+                        self.kill(name, returncode=retcode)
                     break
 
-    def kill(self, name):
+    def kill(self, name, returncode=130):
         """
         kill the spawned subrocess by it's name
         """
         if name in self.process:
             p = self.process[name]
             p.kill()
-            self.returncode[name] = 130
+            self.returncode[name] = returncode
             del self.process[name]
-            return 130
+            return self.returncode[name]
 
     def __repr__(self):
         return str(self.__class__.__name__)+'({})'.format(self.process)
