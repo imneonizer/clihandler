@@ -56,16 +56,19 @@ class CliHandler:
 
             while True:
                 # returns None while subprocess is running
-                retcode = p.poll()
-                line = p.stdout.readline()
-                line = line.decode().strip()
-                if len(line) > 0 and name in self.process: yield line
+                try:
+                    retcode = p.poll()
+                    line = p.stdout.readline()
+                    line = line.decode().strip()
+                    if len(line) > 0 and name in self.process: yield line
 
-                if retcode is not None:
-                    if name in self.process:
-                        self.returncode[name] = retcode
-                        self.kill(name, returncode=retcode)
-                    break
+                    if retcode is not None:
+                        if name in self.process:
+                            self.returncode[name] = retcode
+                            self.kill(name, returncode=retcode)
+                        break
+                except KeyboardInterrupt:
+                    pass
 
     def kill(self, name, returncode=130):
         """
